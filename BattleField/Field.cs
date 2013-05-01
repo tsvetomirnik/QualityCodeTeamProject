@@ -7,27 +7,27 @@ namespace BattleField
 {
 	public class Field
 	{
-		private int n;
+		private int _fieldSize;
 		private string[,] _field;
-		private int izgyrmqniBombi = 0;
-		private int countOfNumberedCells = 0;
-		private int killedNumbers = 0;
+		private int _selectedBombs = 0;
+		private int _generatedBombsCount = 0;
+		private int _coveredBombs = 0;
 
 		public void FillInTheFields()
 		{
 			int row;
 			int column;
-			while (countOfNumberedCells + 1 <= 0.3 * n * n) 
+			while (_generatedBombsCount + 1 <= 0.3 * _fieldSize * _fieldSize) 
 			{
-				row = RandomGenerator.GetRand(0, n - 1);
-				column = RandomGenerator.GetRand(0, n - 1);
-                
+				row = RandomGenerator.GetRand(0, _fieldSize - 1);
+				column = RandomGenerator.GetRand(0, _fieldSize - 1);
+
 				if (_field[row, column] == "-")
 				{
 					_field[row, column] = Convert.ToString(RandomGenerator.GetRand(1, 5));
-					countOfNumberedCells++;
+					_generatedBombsCount++;
 
-					if (countOfNumberedCells >= 0.15 * n * n) 
+					if (_generatedBombsCount >= 0.15 * _fieldSize * _fieldSize) 
 					{
 						int stopFilling = RandomGenerator.GetRand(0, 1);
 						if (stopFilling == 1)
@@ -41,42 +41,46 @@ namespace BattleField
 
 		public void CreateBattleTable()
 		{ 
-			n = ReadCellsNumber();
+			_fieldSize = ReadFieldSize();
 
-			_field = new string[n, n];
-			for (int i = 0; i <= n - 1; i++)
+			_field = new string[_fieldSize, _fieldSize];
+			for (int i = 0; i <= _fieldSize - 1; i++)
 
-			for (int j = 0; j <= n - 1; j++)
+			for (int j = 0; j <= _fieldSize - 1; j++)
 			{
 				_field[i, j] = "-";
 			}
 		}
 
-		public int ReadCellsNumber()
+		public int ReadFieldSize()
 		{
-			string readThings;
+			string fieldSizeInput;
 			int readNumber;
 			do
 			{
 				Console.Write("Please enter valid size of the field: ");
-				readThings = Console.ReadLine();
+				fieldSizeInput = Console.ReadLine();
 
-				if (!(Int32.TryParse(readThings, out readNumber)))
+				if (!(Int32.TryParse(fieldSizeInput, out readNumber)))
 				{
 					readNumber = -1;
 				}
 			}
-			while (!(proverka(readNumber)));
+			while (!(IsValidFieldSize(readNumber)));
 
 			return readNumber;
 		}
 
-		public Boolean proverka(int inputNumber) 
+		public Boolean IsValidFieldSize(int size)
 		{
-			if ((inputNumber < 1) || (inputNumber > 10))
+			if ((size < 1) || (size > 10))
+			{
 				return false;
+			}
 			else
+			{
 				return true;
+			}
 		}
 
 		public void MineCell(int row, int column)
@@ -84,44 +88,49 @@ namespace BattleField
 			int cellNumber;
 
 			if ((_field[row, column] == "X") || ((_field[row, column]) == "-"))
+			{
 				cellNumber = 0;
+			}
 			else
+			{
 				cellNumber = Convert.ToInt32(_field[row, column]);
+			}
+			
 			switch (cellNumber)
 			{
 				case 1:
 					{
 						BombOne(row, column);
 						Print();
-						izgyrmqniBombi++;
+						_selectedBombs++;
 						break;
 					}
 				case 2:
 					{
 						BombTwo(row, column);
 						Print();
-						izgyrmqniBombi++;
+						_selectedBombs++;
 						break;
 					}
 				case 3:
 					{
 						BombThree(row, column);
 						Print();
-						izgyrmqniBombi++;
+						_selectedBombs++;
 						break;
 					}
 				case 4:
 					{
 						BombFour(row, column);
 						Print();
-						izgyrmqniBombi++;
+						_selectedBombs++;
 						break;
 					}
 				case 5:
 					{
 						BombFive(row, column);
 						Print();
-						izgyrmqniBombi++;
+						_selectedBombs++;
 						break;
 					}
 
@@ -136,32 +145,32 @@ namespace BattleField
 		public void BombOne(int row, int column)
 		{
 			_field[row, column] = "X";
-			killedNumbers++;
+			_coveredBombs++;
 			if ((row - 1 >= 0) && (column - 1 >= 0)) 
 			{
 				if ((_field[row - 1, column - 1] != "X") && (_field[row - 1, column - 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 1, column - 1] = "X";
 			}
 
-			if ((row + 1 <= n - 1) && (column - 1 >= 0))
+			if ((row + 1 <= _fieldSize - 1) && (column - 1 >= 0))
 			{
 				if ((_field[row + 1, column - 1] != "X") && (_field[row + 1, column - 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 1, column - 1] = "X";
 			}
 
-			if ((row - 1 >= 0) && (column + 1 <= n - 1))
+			if ((row - 1 >= 0) && (column + 1 <= _fieldSize - 1))
 			{
 				if ((_field[row - 1, column + 1] != "X") && (_field[row - 1, column + 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 1, column + 1] = "X";
 			}
 
-			if ((row + 1 <= n - 1) && (column + 1 <= n - 1))
+			if ((row + 1 <= _fieldSize - 1) && (column + 1 <= _fieldSize - 1))
 			{
 				if ((_field[row + 1, column + 1] != "X") && (_field[row + 1, column + 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 1, column + 1] = "X";
 			}
 		}
@@ -173,28 +182,28 @@ namespace BattleField
 			if (row - 1 >= 0)
 			{
 				if ((_field[row - 1, column] != "X") && (_field[row - 1, column] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 1, column] = "X";
 			}
 
 			if (column - 1 >= 0)
 			{
 				if ((_field[row, column - 1] != "X") && (_field[row, column - 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row, column - 1] = "X";
 			}
 
-			if (column + 1 <= n - 1)
+			if (column + 1 <= _fieldSize - 1)
 			{
 				if ((_field[row, column + 1] != "X") && (_field[row, column + 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row, column + 1] = "X";
 			}
 
-			if (row + 1 <= n - 1)
+			if (row + 1 <= _fieldSize - 1)
 			{
 				if ((_field[row + 1, column] != "X") && (_field[row + 1, column] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 1, column] = "X";
 			}
 		}
@@ -206,28 +215,28 @@ namespace BattleField
 			if (row - 2 >= 0)
 			{
 				if ((_field[row - 2, column] != "X") && (_field[row - 2, column] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 2, column] = "X";
 			}
 
 			if (column - 2 >= 0)
 			{
 				if ((_field[row, column - 2] != "X") && (_field[row, column - 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row, column - 2] = "X";
 			}
 
-			if (column + 2 <= n - 1)
+			if (column + 2 <= _fieldSize - 1)
 			{
 				if ((_field[row, column + 2] != "X") && (_field[row, column + 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row, column + 2] = "X";
 			}
 
-			if (row + 2 <= n - 1)
+			if (row + 2 <= _fieldSize - 1)
 			{
 				if ((_field[row + 2, column] != "X") && (_field[row + 2, column] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 2, column] = "X";
 			}
 		}
@@ -239,57 +248,57 @@ namespace BattleField
 			if ((row - 1 >= 0) && (column - 2 >= 0))
 			{
 				if ((_field[row - 1, column - 2] != "X") && (_field[row - 1, column - 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 1, column - 2] = "X";
 			}
 
-			if ((row + 1 <= n - 1) && (column - 2 >= 0))
+			if ((row + 1 <= _fieldSize - 1) && (column - 2 >= 0))
 			{
 				if ((_field[row + 1, column - 2] != "X") && (_field[row + 1, column - 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 1, column - 2] = "X";
 			}
 
 			if ((row - 2 >= 0) && (column - 1 >= 0))
 			{
 				if ((_field[row - 2, column - 1] != "X") && (_field[row - 2, column - 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 2, column - 1] = "X";
 			}
 
-			if ((row + 2 <= n - 1) && (column - 1 >= 0))
+			if ((row + 2 <= _fieldSize - 1) && (column - 1 >= 0))
 			{
 				if ((_field[row + 2, column - 1] != "X") && (_field[row + 2, column - 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 2, column - 1] = "X";
 			}
 			//
 
-			if ((row - 1 >= 0) && (column + 2 <= n - 1))
+			if ((row - 1 >= 0) && (column + 2 <= _fieldSize - 1))
 			{
 				if ((_field[row - 1, column + 2] != "X") && (_field[row - 1, column + 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 1, column + 2] = "X";
 			}
 
-			if ((row + 1 <= n - 1) && (column + 2 <= n - 1))
+			if ((row + 1 <= _fieldSize - 1) && (column + 2 <= _fieldSize - 1))
 			{
 				if ((_field[row + 1, column + 2] != "X") && (_field[row + 1, column + 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 1, column + 2] = "X";
 			}
 
-			if ((row - 2 >= 0) && (column + 1 <= n - 1))
+			if ((row - 2 >= 0) && (column + 1 <= _fieldSize - 1))
 			{
 				if ((_field[row - 2, column + 1] != "X") && (_field[row - 2, column + 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 2, column + 1] = "X";
 			}
 
-			if ((row + 2 <= n - 1) && (column + 1 <= n - 1))
+			if ((row + 2 <= _fieldSize - 1) && (column + 1 <= _fieldSize - 1))
 			{
 				if ((_field[row + 2, column + 1] != "X") && (_field[row + 2, column + 1] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 2, column + 1] = "X";
 			}
 		}
@@ -301,28 +310,28 @@ namespace BattleField
 			if ((row - 2 >= 0) && (column - 2 >= 0))
 			{
 				if ((_field[row - 2, column - 2] != "X") && (_field[row - 2, column - 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 2, column - 2] = "X";
 			}
 
-			if ((row + 2 <= n - 1) && (column - 2 >= 0))
+			if ((row + 2 <= _fieldSize - 1) && (column - 2 >= 0))
 			{
 				if ((_field[row + 2, column - 2] != "X") && (_field[row + 2, column - 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 2, column - 2] = "X";
 			}
 
-			if ((row - 2 >= 0) && (column + 2 <= n - 1))
+			if ((row - 2 >= 0) && (column + 2 <= _fieldSize - 1))
 			{
 				if ((_field[row - 2, column + 2] != "X") && (_field[row - 2, column + 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row - 2, column + 2] = "X";
 			}
 
-			if ((row + 2 <= n - 1) && (column + 2 <= n - 1))
+			if ((row + 2 <= _fieldSize - 1) && (column + 2 <= _fieldSize - 1))
 			{
 				if ((_field[row + 2, column + 2] != "X") && (_field[row + 2, column + 2] != "-"))
-					killedNumbers++;
+					_coveredBombs++;
 				_field[row + 2, column + 2] = "X";
 			}
 		}
@@ -330,22 +339,22 @@ namespace BattleField
 		public void Print()
 		{
 			Console.Write("   ");
-			for (int k = 0; k <= n - 1; k++)
+			for (int k = 0; k <= _fieldSize - 1; k++)
 			{
 				Console.Write(k + " ");
 			}
 			Console.WriteLine();
 			Console.Write("   ");
-			for (int k = 0; k <= n - 1; k++)
+			for (int k = 0; k <= _fieldSize - 1; k++)
 			{
 				Console.Write("--");
 			}
 			Console.WriteLine();
 
-			for (int i = 0; i <= n - 1; i++)
+			for (int i = 0; i <= _fieldSize - 1; i++)
 			{
 				Console.Write(i + "| ");
-				for (int j = 0; j <= n - 1; j++)
+				for (int j = 0; j <= _fieldSize - 1; j++)
 				{
 					Console.Write(_field[i, j] + " ");
 				}
@@ -358,7 +367,7 @@ namespace BattleField
 
 		public bool OutOfAreaCoordinates(int row, int column)
 		{
-			if ((row >= 0) && (row <= n - 1) && (column >= 0) && (column <= n - 1))
+			if ((row >= 0) && (row <= _fieldSize - 1) && (column >= 0) && (column <= _fieldSize - 1))
 			{
 				return false;
 			}
@@ -373,7 +382,7 @@ namespace BattleField
 
 		public bool Over()
 		{
-			if (killedNumbers == countOfNumberedCells)
+			if (_coveredBombs == _generatedBombsCount)
 				return true;
 			else
 				return false;
@@ -417,7 +426,7 @@ namespace BattleField
 				}
 			}
 
-			Console.WriteLine("Game Over.Detonated Mines {0}", izgyrmqniBombi);
+			Console.WriteLine("Game Over.Detonated Mines {0}", _selectedBombs);
 		}
 
 		public string GetValue(Cell cell)
