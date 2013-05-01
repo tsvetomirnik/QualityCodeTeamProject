@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleFieldGame.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="Field.cs" />
     <Compile Include="RandomGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
