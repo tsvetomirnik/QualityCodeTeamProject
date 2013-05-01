@@ -8,7 +8,7 @@
     <ProjectGuid>{85255C43-CCD7-4E3B-8C0B-79AC0D498B85}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BattleFieldNamespace</RootNamespace>
+    <RootNamespace>BattleField</RootNamespace>
     <AssemblyName>BattleField</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleFieldGame.cs" />
+    <Compile Include="RandomGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
