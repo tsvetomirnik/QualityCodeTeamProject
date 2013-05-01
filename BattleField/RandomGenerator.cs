@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-
-namespace BattleField
+﻿namespace BattleField
 {
-	class RandomGenerator
+    using System;
+    using System.Linq;
+
+	public class RandomGenerator
 	{
 		private static readonly Random random = new Random();
 
