@@ -3,15 +3,21 @@
 	using System;
 	using System.Linq;
 
-	public class ConsoleUserInput : IUserInput
+	public class ConsoleUserOutput : IUserOutput
 	{
-		public int[] GetFieldSize()
+		public void DisplayMessage()
 		{
 			// TODO: Implement this method
 			throw new NotImplementedException();
 		}
 
-		public int[] GetCellPosition()
+		public void DisplayWarning()
+		{
+			// TODO: Implement this method
+			throw new NotImplementedException();
+		}
+
+		public void DisplayException()
 		{
 			// TODO: Implement this method
 			throw new NotImplementedException();

@@ -13,18 +13,19 @@ namespace BattleField
 		private int _generatedBombsCount = 0;
 		private int _coveredBombs = 0;
 
-		public void FillInTheFields()
+		public void AddFieldBombs()
 		{
-			int row;
-			int column;
+			// TODO: Extract method to calculate the desired count of the bombs depending of desired (rand) percentage
 			while (_generatedBombsCount + 1 <= 0.3 * _fieldSize * _fieldSize) 
 			{
-				row = RandomGenerator.GetRand(0, _fieldSize - 1);
-				column = RandomGenerator.GetRand(0, _fieldSize - 1);
-
-				if (_field[row, column] == "-")
+				Cell cell = new Cell();
+				cell.Row = RandomGenerator.GetRand(0, _fieldSize - 1);
+				cell.Col = RandomGenerator.GetRand(0, _fieldSize - 1);
+				
+				// TODO: Use getValue method over Field object
+				if (_field[cell.Row, cell.Col] == "-")
 				{
-					_field[row, column] = Convert.ToString(RandomGenerator.GetRand(1, 5));
+					_field[cell.Row, cell.Col] = Convert.ToString(RandomGenerator.GetRand(1, 5));
 					_generatedBombsCount++;
 
 					if (_generatedBombsCount >= 0.15 * _fieldSize * _fieldSize) 
@@ -39,16 +40,17 @@ namespace BattleField
 			}
 		}
 
-		public void CreateBattleTable()
+		public void CreateEmptyField()
 		{ 
 			_fieldSize = ReadFieldSize();
 
 			_field = new string[_fieldSize, _fieldSize];
 			for (int i = 0; i <= _fieldSize - 1; i++)
-
-			for (int j = 0; j <= _fieldSize - 1; j++)
 			{
-				_field[i, j] = "-";
+				for (int j = 0; j <= _fieldSize - 1; j++)
+				{
+					_field[i, j] = "-";
+				}
 			}
 		}
 
@@ -101,42 +103,42 @@ namespace BattleField
 				case 1:
 					{
 						BombOne(row, column);
-						Print();
+						ShowField();
 						_selectedBombs++;
 						break;
 					}
 				case 2:
 					{
 						BombTwo(row, column);
-						Print();
+						ShowField();
 						_selectedBombs++;
 						break;
 					}
 				case 3:
 					{
 						BombThree(row, column);
-						Print();
+						ShowField();
 						_selectedBombs++;
 						break;
 					}
 				case 4:
 					{
 						BombFour(row, column);
-						Print();
+						ShowField();
 						_selectedBombs++;
 						break;
 					}
 				case 5:
 					{
 						BombFive(row, column);
-						Print();
+						ShowField();
 						_selectedBombs++;
 						break;
 					}
 
 				default:
 					{
-						InvalidMove();
+						ShowInvalidMoveMessage();
 						break;
 					}
 			}
@@ -336,97 +338,132 @@ namespace BattleField
 			}
 		}
 
-		public void Print()
+		public void ShowField()
 		{
-			Console.Write("   ");
-			for (int k = 0; k <= _fieldSize - 1; k++)
-			{
-				Console.Write(k + " ");
-			}
-			Console.WriteLine();
-			Console.Write("   ");
-			for (int k = 0; k <= _fieldSize - 1; k++)
-			{
-				Console.Write("--");
-			}
-			Console.WriteLine();
+			const int TopBarOffsetSize = 3;
+			// TODO: declare char constants
 
+			StringBuilder topNumbersBar = new StringBuilder();
+			topNumbersBar.Append(new string(' ', TopBarOffsetSize));
+			for (int k = 0; k <= _fieldSize - 1; k++)
+			{
+				topNumbersBar.AppendFormat("{0} ", k);
+			}
+			topNumbersBar.AppendLine();
+
+			topNumbersBar.Append(new string(' ', TopBarOffsetSize));
+			topNumbersBar.AppendLine(new string('-', _fieldSize * 2)); //TODO: _fieldSize * 2 works only for 0-9 numbers
+			Console.WriteLine(topNumbersBar.ToString());
+
+			StringBuilder fieldString = new StringBuilder();
 			for (int i = 0; i <= _fieldSize - 1; i++)
 			{
-				Console.Write(i + "| ");
+				fieldString.AppendFormat("{0}| ", i);
 				for (int j = 0; j <= _fieldSize - 1; j++)
 				{
-					Console.Write(_field[i, j] + " ");
+					fieldString.AppendFormat("{0} ", _field[i, j]);
 				}
 
-				Console.WriteLine();
-
-				Console.WriteLine();
+				fieldString.AppendLine();
+				fieldString.AppendLine();
 			}
+
+			Console.WriteLine(fieldString);
 		}
 
-		public bool OutOfAreaCoordinates(int row, int column)
+		public bool IsCellInsideField(Cell cell)
 		{
-			if ((row >= 0) && (row <= _fieldSize - 1) && (column >= 0) && (column <= _fieldSize - 1))
+			if (cell.Row >= 0
+				&& cell.Col >= 0
+				&& cell.Row <= _fieldSize - 1
+				&& cell.Col <= _fieldSize - 1)
 			{
-				return false;
+				return true;
 			}
-			return true;
+
+			return false;
 		}
 
-		public void InvalidMove()
+		public void ShowInvalidMoveMessage()
 		{
 			Console.WriteLine("Invalid Move!");
 			Console.WriteLine();
 		}
 
-		public bool Over()
+		public bool IsCompleted()
 		{
 			if (_coveredBombs == _generatedBombsCount)
+			{
 				return true;
+			}
 			else
+			{
 				return false;
+			}
+		}
+
+		public Cell GetUserInputCell()
+		{
+			Console.Write("Please enter coordinates: ");
+
+			string inputRowAndColumn = Console.ReadLine();
+			string[] rowAndColumnSplit = inputRowAndColumn.Split(' ');
+
+			Cell cell = new Cell();
+
+			bool isValidInput = true;
+			do
+			{
+				// TODO: Show as errors/warnings
+				if (rowAndColumnSplit.Length <= 0)
+				{
+					isValidInput = false;
+					Console.WriteLine("Invalid parameters count.");
+					break;
+				}
+
+				int row;
+				int col;
+				if (!int.TryParse(rowAndColumnSplit[0], out row)
+					|| !int.TryParse(rowAndColumnSplit[1], out col))
+				{
+					isValidInput = false;
+					Console.WriteLine("Not valid parameters values.");
+					break;
+				}
+
+				if (isValidInput)
+				{
+					cell.Row = row;
+					cell.Col = col;
+				}
+				
+			} while (!isValidInput);
+
+			return cell;
 		}
 
 		public void GameSession()
 		{
-			CreateBattleTable();
-			FillInTheFields();
-			Print();
+			CreateEmptyField();
+			AddFieldBombs();
+			ShowField();
 
-			while (!(Over()))
+			while (!IsCompleted())
 			{
-				Console.Write("Please Enter Coordinates : ");
+				Cell cell = GetUserInputCell();
 
-				string inputRowAndColumn = Console.ReadLine();
-				string[] rowAndColumnSplit = inputRowAndColumn.Split(' ');
-				int row ;
-				int column;
-
-				if ((rowAndColumnSplit.Length) <= 0)
+				if (IsCellInsideField(cell)) 
 				{
-					row = - 1;
-					column = -1;
-				}
-				else
-				{
-					if (!(int.TryParse(rowAndColumnSplit[0], out row)))
-						row = -1;
-					if (!(int.TryParse(rowAndColumnSplit[1], out column)))
-						column = -1;
-				}
-
-				if ((OutOfAreaCoordinates(row, column))) 
-				{
-					Console.WriteLine("This Move Is Out Of Area.");
+					MineCell(cell.Row, cell.Col);
 				}
 				else 
-				{ 
-					MineCell(row, column);
+				{
+					Console.WriteLine("This move is out of area.");	
 				}
 			}
 
-			Console.WriteLine("Game Over.Detonated Mines {0}", _selectedBombs);
+			Console.WriteLine("Game over. Detonated mines are {0}.", _selectedBombs);
 		}
 
 		public string GetValue(Cell cell)

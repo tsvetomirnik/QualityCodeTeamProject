@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RefactoredBattleField.View
+﻿namespace RefactoredBattleField.View
 {
-    interface IUserInput
-    {
+	using System;
+	using System.Linq;
 
-        int[] GetFieldSize();
+	interface IUserInput
+	{
+		int[] GetFieldSize();
 
-        int[] GetCellPosition();
-    }
+		int[] GetCellPosition();
+	}
 }
