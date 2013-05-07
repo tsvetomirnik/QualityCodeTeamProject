@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUserOutput.cs" />
-    <Compile Include="IUserOutput.cs" />
+    <Compile Include="View\ConsoleUserOutput.cs" />
+    <Compile Include="View\IUserOutput.cs" />
     <Compile Include="Model\Cell.cs" />
     <Compile Include="Model\RandomGenerator.cs" />
     <Compile Include="View\ConsoleUserInput.cs" />
