@@ -59,7 +59,7 @@
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BattleField\RefactoredBattleField\RefactoredBattleField.csproj">
+    <ProjectReference Include="..\RefactoredBattleField\RefactoredBattleField.csproj">
       <Project>{42d6b763-2702-4b3d-88a8-31b2fa86a7d0}</Project>
       <Name>RefactoredBattleField</Name>
     </ProjectReference>

@@ -23,7 +23,7 @@
 			set
 			{
 				_row = value;
-			}//TODO: Is this the place to validate in case of '-1' or other negative values
+			}
 		}
 
 		public int Col

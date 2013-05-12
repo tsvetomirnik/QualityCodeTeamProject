@@ -5,7 +5,7 @@
 
 	interface IUserInput
 	{
-		int[] GetFieldSize();
+		int GetFieldSize();
 
 		int[] GetCellPosition();
 	}

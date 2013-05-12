@@ -5,10 +5,10 @@
 
 	public interface IUserOutput
 	{
-		void DisplayMessage();
+		void DisplayMessage(string message);
 
-		void DisplayWarning();
+		void DisplayWarning(string message);
 
-		void DisplayException();
+		void DisplayException(Exception exception);
 	}
 }

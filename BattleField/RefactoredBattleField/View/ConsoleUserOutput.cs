@@ -5,22 +5,20 @@
 
 	public class ConsoleUserOutput : IUserOutput
 	{
-		public void DisplayMessage()
+		public void DisplayMessage(string message)
+		{
+			Console.WriteLine(message);
+		}
+
+		public void DisplayWarning(string message)
 		{
 			// TODO: Implement this method
 			throw new NotImplementedException();
 		}
 
-		public void DisplayWarning()
+		public void DisplayException(Exception exception)
 		{
-			// TODO: Implement this method
-			throw new NotImplementedException();
-		}
-
-		public void DisplayException()
-		{
-			// TODO: Implement this method
-			throw new NotImplementedException();
+			Console.WriteLine(exception.Message);
 		}
 	}
 }

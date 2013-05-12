@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Bomb.cs" />
+    <Compile Include="Model\Example.cs" />
+    <Compile Include="Model\Explosion.cs" />
+    <Compile Include="Model\FieldObject.cs" />
+    <Compile Include="Model\IRenderable.cs" />
     <Compile Include="View\ConsoleUserOutput.cs" />
     <Compile Include="View\IUserOutput.cs" />
     <Compile Include="Model\Cell.cs" />
