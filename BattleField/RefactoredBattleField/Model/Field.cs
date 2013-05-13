@@ -73,6 +73,9 @@ namespace RefactoredBattleField.Model
 				&& x.GetPosition().Row == bomb.GetPosition().Row);
 		}
 
+        
+
+
 		public int BombsCount
 		{
 			get
@@ -80,6 +83,8 @@ namespace RefactoredBattleField.Model
 				return _bombs.Count();
 			}
 		}
+
+
 
 		private bool IsInRange(Cell position)
 		{
@@ -93,5 +98,7 @@ namespace RefactoredBattleField.Model
 
 			return true;
 		}
+
+
 	}
 }

@@ -8,9 +8,20 @@
 	{
 		public int GetFieldSize()
 		{
-			// TODO: Implement this method
-			throw new NotImplementedException();
+            string fieldSizeInput;
+            int readNumber;
+           
+            fieldSizeInput = Console.ReadLine();
+
+            if (!(Int32.TryParse(fieldSizeInput, out readNumber)))
+            {
+                readNumber = -1;
+            }           
+
+            return readNumber;
 		}
+
+        
 
 		public int[] GetCellPosition()
 		{
@@ -18,9 +29,9 @@
 			throw new NotImplementedException();
 		}
 
-		public int[] GetUserInputCell()
-		{
-			throw new NotImplementedException();
+		public Cell GetUserInputCell()
+        {
+            Console.Write("Please enter coordinates: ");
 
 			string inputRowAndColumn = Console.ReadLine();
 			string[] rowAndColumnSplit = inputRowAndColumn.Split(' ');
@@ -55,6 +66,7 @@
 			}
 
 			while (!isValidInput);
+            return cell;
 		}
 	}
 }

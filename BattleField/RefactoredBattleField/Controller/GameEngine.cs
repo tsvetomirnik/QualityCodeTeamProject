@@ -23,9 +23,15 @@ namespace RefactoredBattleField.Controller
 		{
 			_userOutput.DisplayMessage("Please enter valid size of the field: ");
 			int fieldSize = _userInput.GetFieldSize();
+            
+            //IRenderer renderer = new ConsoleRenderer(fieldSize);
+
 			Field field = FieldGenerator.GenerateField(fieldSize);
 
 			ShowField(field); //TODO: UserOuput shoud do that
+
+            
+
 
 			//Just example
 			Bomb b = new Bomb(new Cell(1,2), 1);
@@ -50,6 +56,7 @@ namespace RefactoredBattleField.Controller
 
 		private void ShowField(Field field)
 		{
+            _userOutput.DisplayField(field);
 			//TODO: UserOuput shoud do that
 		}
 	}

@@ -7,6 +7,8 @@ namespace RefactoredBattleField
 	{
 		static void Main(string[] args)
 		{
+            Controller.GameEngine game = new Controller.GameEngine();
+            game.Run();
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace RefactoredBattleField.Controller
 				throw new ArgumentException("Invalid null or negative size value.");
 			}
 
-			var bombsPercentage = RandomGenerator.GetRand(15, 30);
+			var bombsPercentage = RandomGenerator.GetRand(MinBombsPercentage, MaxBombsPercentage+1);
 			int desiredBombs = (fieldSize * fieldSize) * (bombsPercentage / 100);
 
 			Field generatedField = new Field(fieldSize);
@@ -26,7 +26,7 @@ namespace RefactoredBattleField.Controller
 				var bomb = GetRandomBomb(fieldSize);
 				generatedField.AddBomb(bomb);
 			}
-
+            
 			return generatedField;
 		}
 

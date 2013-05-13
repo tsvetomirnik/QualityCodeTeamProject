@@ -10,5 +10,7 @@
 		void DisplayWarning(string message);
 
 		void DisplayException(Exception exception);
+
+        void DisplayField(Model.Field field);
 	}
 }
