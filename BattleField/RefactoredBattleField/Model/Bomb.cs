@@ -61,7 +61,7 @@ namespace RefactoredBattleField.Model
 		
 		protected void SetExplosion(int size)
 		{
-			char[,] explosionBody = new char[,];
+			char[,] explosionBody = new char[,]{};
 
 			//TODO: Create better scheme to set explosion body
 			if (size == 1)
@@ -106,7 +106,7 @@ namespace RefactoredBattleField.Model
 				throw new Exception(); //Add custom exception
 			}
 
-			OnBombExploded();
+			OnBombExploded(new EventArgs());
 			_isExploded = true;
 		}
 	}

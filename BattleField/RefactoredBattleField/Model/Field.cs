@@ -8,7 +8,7 @@ namespace RefactoredBattleField.Model
 {
 	public class Field
 	{
-		public const int MaxSize;
+		public const int MaxSize=10;
 
 		private int _size;
 		private List<Bomb> _bombs;
@@ -31,7 +31,7 @@ namespace RefactoredBattleField.Model
 				}
 
 				_size = value;
-			};
+			}
 		}
 
 		public void AddBomb(Bomb bomb)
@@ -46,7 +46,7 @@ namespace RefactoredBattleField.Model
 				throw new ArgumentOutOfRangeException("bomb");
 			}
 
-			if (ContainsBombObject(bomb))
+			if (ContainsBomb(bomb))
 			{
 				throw new Exception("Already exists element on this position."); //TODO: Add new exception type
 			}

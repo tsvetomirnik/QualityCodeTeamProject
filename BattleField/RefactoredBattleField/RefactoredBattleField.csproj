@@ -41,15 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\FieldGenerator.cs" />
+    <Compile Include="Controller\GameEngine.cs" />
+    <Compile Include="Controller\RandomGenerator.cs" />
     <Compile Include="Model\Bomb.cs" />
-    <Compile Include="Model\Example.cs" />
     <Compile Include="Model\Explosion.cs" />
+    <Compile Include="Model\Field.cs" />
     <Compile Include="Model\FieldObject.cs" />
-    <Compile Include="Model\IRenderable.cs" />
     <Compile Include="View\ConsoleUserOutput.cs" />
     <Compile Include="View\IUserOutput.cs" />
     <Compile Include="Model\Cell.cs" />
-    <Compile Include="Model\RandomGenerator.cs" />
     <Compile Include="View\ConsoleUserInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +61,6 @@
     <None Include="FullClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controller\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
