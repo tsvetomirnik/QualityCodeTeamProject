@@ -93,8 +93,28 @@ namespace RefactoredBattleField.Model
 					{' ', ' ', 'x', ' ', ' '},
 				};
 			}
-
-			//TODO: Add 4 and 5
+            else if (size == 4)
+            {
+                explosionBody = new[,]
+				{
+					{' ', 'x', 'x', 'x', ' '},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{' ', 'x', 'x', 'x', ' '},
+				};
+            }
+            else if (size == 4)
+            {
+                explosionBody = new[,]
+				{
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+				};
+            }
 
 			Explosion = new Explosion(this.position, explosionBody);
 		}
