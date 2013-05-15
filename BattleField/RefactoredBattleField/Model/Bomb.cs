@@ -104,7 +104,7 @@ namespace RefactoredBattleField.Model
 					{' ', 'x', 'x', 'x', ' '},
 				};
             }
-            else if (size == 4)
+            else if (size == 5)
             {
                 explosionBody = new[,]
 				{
