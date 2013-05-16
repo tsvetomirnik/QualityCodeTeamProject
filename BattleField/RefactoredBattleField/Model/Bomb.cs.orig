@@ -96,6 +96,14 @@ namespace RefactoredBattleField.Model
 					{0, 0, 1, 0, 0},
 				};
 			}
+<<<<<<< HEAD
+			else
+			{
+				throw new Exception("Invalid size"); //TODO: Write better exception
+			}
+
+			//TODO: Add 4 and 5
+=======
             else if (size == 4)
             {
                 explosionBody = new[,]
@@ -118,6 +126,7 @@ namespace RefactoredBattleField.Model
 					{'x', 'x', 'x', 'x', 'x'},
 				};
             }
+>>>>>>> 5316a9e55baf9bb5cc9e9a2f329955ffd113a979
 
 			Cell explosionPosition = new Cell
 			{
