@@ -13,8 +13,10 @@ namespace RefactoredBattleField.Model
 		private Explosion _explosion;
 
 		public Bomb(Cell position, int size)
-			: base(position, new char[,]{{ (char)size }})
+			: base(position)
 		{
+			Size = size;
+
 			SetExplosion(size);
 
 			_isExploded = false;
@@ -33,7 +35,7 @@ namespace RefactoredBattleField.Model
 		public int Size
 		{
 			get { return _size; }
-			set
+			private set
 			{
 				if (value <= 0 || value > MaxSize)
 				{
@@ -61,42 +63,52 @@ namespace RefactoredBattleField.Model
 		
 		protected void SetExplosion(int size)
 		{
-			char[,] explosionBody = new char[,]{};
+			int[,] explosionBody = new int[,]{};
+			Cell explosionCenter;
 
 			//TODO: Create better scheme to set explosion body
 			if (size == 1)
 			{
 				explosionBody = new[,]
 				{
-					{'x', ' ', 'x'},
-					{' ', 'x', ' '},
-					{'x', ' ', 'x'},
+					{1, 0, 1},
+					{0, 1, 0},
+					{1, 0, 1},
 				};
 			}
 			else if(size == 2)
 			{
 				explosionBody = new[,]
 				{
-					{'x', 'x', 'x'},
-					{'x', 'x', 'x'},
-					{'x', 'x', 'x'},
+					{1, 1, 1},
+					{1, 1, 1},
+					{1, 1, 1},
 				};
 			}
-			else if(size == 3)
+			else if (size == 3)
 			{
 				explosionBody = new[,]
 				{
-					{' ', ' ', 'x', ' ', ' '},
-					{' ', 'x', 'x', 'x', ' '},
-					{'x', 'x', 'x', 'x', 'x'},
-					{' ', 'x', 'x', 'x', ' '},
-					{' ', ' ', 'x', ' ', ' '},
+					{0, 0, 1, 0, 0},
+					{0, 1, 1, 1, 0},
+					{1, 1, 1, 1, 1},
+					{0, 1, 1, 1, 0},
+					{0, 0, 1, 0, 0},
 				};
+			}
+			else
+			{
+				throw new Exception("Invalid size"); //TODO: Write better exception
 			}
 
 			//TODO: Add 4 and 5
 
-			Explosion = new Explosion(this.position, explosionBody);
+			Cell explosionPosition = new Cell
+			{
+				Col = this.position.Row - (explosionBody.GetLength(0)/2),
+				Row = this.position.Col - (explosionBody.GetLength(1)/2)
+			};
+			Explosion = new Explosion(explosionPosition, explosionBody);
 		}
 
 		public void Explode()

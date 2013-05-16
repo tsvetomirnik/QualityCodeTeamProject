@@ -21,12 +21,12 @@ namespace RefactoredBattleField.Controller
 
 			Field generatedField = new Field(fieldSize);
 
-			while (generatedField.BombsCount < desiredBombs)
+			while (generatedField.FieldObjectsCount < desiredBombs)
 			{
 				var bomb = GetRandomBomb(fieldSize);
-				generatedField.AddBomb(bomb);
+				generatedField.AddFieldObjects(bomb);
 			}
-            
+
 			return generatedField;
 		}
 

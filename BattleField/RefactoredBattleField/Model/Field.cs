@@ -11,18 +11,18 @@ namespace RefactoredBattleField.Model
 		public const int MaxSize=10;
 
 		private int _size;
-		private List<Bomb> _bombs;
+		private List<FieldObject> _fieldObjects;
 
 		public Field(int size)
 		{
 			Size = size;
-			_bombs = new List<Bomb>();
+			_fieldObjects = new List<FieldObject>();
 		}
 
 		public int Size
 		{
 			get { return _size; }
-			set
+			private set
 			{
 				if(value <= 0 && value > Field.MaxSize)
 				{
@@ -34,57 +34,57 @@ namespace RefactoredBattleField.Model
 			}
 		}
 
-		public void AddBomb(Bomb bomb)
+		public void AddFieldObjects(FieldObject fieldObject)
 		{
-			if (bomb == null)
+			if (fieldObject == null)
 			{
-				throw new ArgumentNullException("bomb");
+				throw new ArgumentNullException("fieldObjects");
 			}
 
-			if (!IsInRange(bomb.GetPosition()))
+			if (!IsInRange(fieldObject.GetPosition()))
 			{
-				throw new ArgumentOutOfRangeException("bomb");
+				throw new ArgumentOutOfRangeException("fieldObjects");
 			}
 
-			if (ContainsBomb(bomb))
+			if (ContainsFieldObject(fieldObject))
 			{
 				throw new Exception("Already exists element on this position."); //TODO: Add new exception type
 			}
 
-			_bombs.Add(bomb);
+			_fieldObjects.Add(fieldObject);
 		}
 
-		public FieldObject GetBomb(Cell position)
+		public List<FieldObject> GetFieldObjects()
+		{
+			return _fieldObjects;
+		}
+
+		public FieldObject GetFieldObject(Cell position)
 		{
 			if (!IsInRange(position))
 			{
 				throw new ArgumentOutOfRangeException("position");
 			}
 
-			return _bombs.Where(x => 
+			return _fieldObjects.Where(x => 
 				x.GetPosition().Col == position.Col 
 				&& x.GetPosition().Row == position.Row).First();
 		}
 
-		public bool ContainsBomb(Bomb bomb)
+		public bool ContainsFieldObject(FieldObject fieldObject)
 		{
-			return _bombs.Any(x => 
-				x.GetPosition().Col == bomb.GetPosition().Col 
-				&& x.GetPosition().Row == bomb.GetPosition().Row);
+			return _fieldObjects.Any(x => 
+				x.GetPosition().Col == fieldObject.GetPosition().Col 
+				&& x.GetPosition().Row == fieldObject.GetPosition().Row);
 		}
 
-        
-
-
-		public int BombsCount
+		public int FieldObjectsCount
 		{
 			get
 			{
-				return _bombs.Count();
+				return _fieldObjects.Count();
 			}
 		}
-
-
 
 		private bool IsInRange(Cell position)
 		{
@@ -98,7 +98,5 @@ namespace RefactoredBattleField.Model
 
 			return true;
 		}
-
-
 	}
 }
