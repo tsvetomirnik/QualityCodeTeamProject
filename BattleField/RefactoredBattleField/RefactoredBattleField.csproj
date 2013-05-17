@@ -52,7 +52,7 @@
     <Compile Include="View\IUserOutput.cs" />
     <Compile Include="Model\Cell.cs" />
     <Compile Include="View\ConsoleUserInput.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="BattleFieldGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\IUserInput.cs" />
   </ItemGroup>

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RefactoredBattleField
 {
-	class Program
+	class BattleFieldGame
 	{
 		static void Main(string[] args)
 		{
