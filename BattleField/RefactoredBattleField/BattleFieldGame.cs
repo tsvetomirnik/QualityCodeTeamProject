@@ -15,6 +15,10 @@
 		    IUserOutput userOutput = new ConsoleUserOutput();
             Controller.GameEngine game = new Controller.GameEngine(userInput, userOutput);
             game.Run();
+
+
+            // P.S. Git Repository:
+            // https://github.com/tsvetomir-nikolov/QualityCodeTeamProject
 		}
 	}
 }
