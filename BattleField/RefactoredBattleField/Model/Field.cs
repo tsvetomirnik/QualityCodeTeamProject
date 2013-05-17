@@ -49,7 +49,7 @@ namespace RefactoredBattleField.Model
 
 			if (ContainsFieldObject(fieldObject.Position))
 			{
-				//throw new ArgumentException("Already exists element on this position."); //TODO: Add new exception type
+				throw new ArgumentException("Already exists element on this position."); //TODO: Add new exception type
 			}
 
 			fieldObjects.Add(fieldObject);

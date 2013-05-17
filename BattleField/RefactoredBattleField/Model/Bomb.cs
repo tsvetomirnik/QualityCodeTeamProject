@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RefactoredBattleField.Exceptions;
+using System;
 using System.Linq;
 
 namespace RefactoredBattleField.Model
@@ -7,10 +8,10 @@ namespace RefactoredBattleField.Model
 	{
 		public const int MinSize = 1;
 		public const int MaxSize = 5;
-		private bool _isExploded;
+		private bool isExploded;
 
-		private int _size;
-		private Explosion _explosion;
+		private int size;
+        private Explosion explosion;
 
 		public Bomb(Cell position, int size)
 			: base(position)
@@ -19,7 +20,7 @@ namespace RefactoredBattleField.Model
             
             this.SetExplosion(size);
 
-            _isExploded = false;
+            isExploded = false;
 		}
 
 		public event EventHandler BombExploded;
@@ -34,7 +35,7 @@ namespace RefactoredBattleField.Model
 
 		public int Size
 		{
-			get { return _size; }
+			get { return size; }
 			private set
 			{
 				if (value <= 0 || value > MaxSize)
@@ -43,21 +44,22 @@ namespace RefactoredBattleField.Model
 						string.Format("Size must be in range of [{0}:{1}]", Bomb.MinSize, Bomb.MaxSize));
 				}
 
-				_size = value;
+				size = value;
 			}
 		}
 
 		public Explosion Explosion
 		{
-			get { return _explosion; }
+			get { return explosion; }
 			private set
 			{
 				if (value == null)
 				{
-					throw new ArgumentNullException("Explosion");
+					throw new ArgumentNullException("Explosion",
+                        "Explosion cannot be null.");
 				}
 
-				_explosion = value;
+				explosion = value;
 			}
 		}
 		
@@ -128,18 +130,17 @@ namespace RefactoredBattleField.Model
 				Row = this.Position.Col - (explosionBody.GetLength(1)/2)
 			};
 			Explosion = new Explosion(explosionPosition, explosionBody);
-
 		}
 
 		public void Explode()
 		{
-			if(_isExploded)
+			if(isExploded)
 			{
-				throw new Exception(); //Add custom exception
+                throw new AlreadyExplodedBombException(this);
 			}
 
 			OnBombExploded(new EventArgs());
-			_isExploded = true;
+			isExploded = true;
 		}
 	}
 }

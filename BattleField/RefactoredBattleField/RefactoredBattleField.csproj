@@ -44,6 +44,8 @@
     <Compile Include="Controller\FieldGenerator.cs" />
     <Compile Include="Controller\GameEngine.cs" />
     <Compile Include="Controller\RandomGenerator.cs" />
+    <Compile Include="Exceptions\AlreadyExplodedBombException.cs" />
+    <Compile Include="Extensions\ShuffleIListExtension.cs" />
     <Compile Include="Model\Bomb.cs" />
     <Compile Include="Model\Explosion.cs" />
     <Compile Include="Model\Field.cs" />
@@ -61,9 +63,7 @@
     <None Include="FullClassDiagram.cd" />
     <None Include="Program_Main.sequencediagram" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Program_Main.sequencediagram.layout">
       <DependentUpon>Program_Main.sequencediagram</DependentUpon>
