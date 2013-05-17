@@ -17,7 +17,7 @@ namespace RefactoredBattleField.Model
 		{
 			Size = size;
 
-			SetExplosion(size);
+            this.SetExplosion(size);
 
 			_isExploded = false;
 		}
@@ -100,22 +100,22 @@ namespace RefactoredBattleField.Model
             {
                 explosionBody = new[,]
 				{
-					{' ', 'x', 'x', 'x', ' '},
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
-					{' ', 'x', 'x', 'x', ' '},
+					{0, 1, 1, 1, 0},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
+					{0, 1, 1, 1, 0},
 				};
             }
             else if (size == 5)
             {
                 explosionBody = new[,]
 				{
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
-					{'x', 'x', 'x', 'x', 'x'},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1},
 				};
             }
 
