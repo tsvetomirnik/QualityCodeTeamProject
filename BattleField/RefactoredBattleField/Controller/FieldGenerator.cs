@@ -15,7 +15,7 @@ namespace RefactoredBattleField.Controller
         /// Generates the field.
         /// </summary>
         /// <param name="fieldSize">Valid size of the field (1..10).</param>
-        /// <returns>Field.</returns>
+        /// <returns>The newly generated <see cref="Field"/>.</returns>
         public static Field GenerateField(int fieldSize)
         {
 			if (fieldSize <= 0)
@@ -63,12 +63,6 @@ namespace RefactoredBattleField.Controller
 
             // Pick only first desiredBombCount number of position
             var generatedPositions = generateAllPositions.GetRange(0, desiredBombCount);
-            
-            foreach (var pos in generatedPositions)
-            {
-                Console.WriteLine("{0}, {1}", pos.Row, pos.Col);
-            }
-            
 
             return generatedPositions;
         }
