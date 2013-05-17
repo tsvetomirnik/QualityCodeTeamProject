@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-
-namespace RefactoredBattleField.Extensions
+﻿namespace RefactoredBattleField.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Cryptography;
+
     public static class ShuffleIListExtension
     {
         public static void Shuffle<T>(this IList<T> list)

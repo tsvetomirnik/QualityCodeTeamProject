@@ -1,21 +1,21 @@
-﻿using System;
-using System.Linq;
-using RefactoredBattleField.Model;
-using RefactoredBattleField.View;
-
-namespace RefactoredBattleField.Controller
+﻿namespace RefactoredBattleField.Controller
 {
+    using System;
+    using System.Linq;
+    using RefactoredBattleField.Model;
+    using RefactoredBattleField.View;
+
 	public class GameEngine
 	{
-		//private readonly IUserInput _userInput;
-		//private readonly IUserOutput _userOutput;
+		private IUserInput userInput;
+		private IUserOutput userOutput;
 		int coveredBombs = 0;
 		int explodedBombs = 0;
 
-		public GameEngine()
+        public GameEngine(IUserInput userInput, IUserOutput userOutput)
 		{
-			//_userInput = new ConsoleUserInput();
-			//_userOutput = new ConsoleUserOutput();
+            this.userInput = userInput;
+            this.userOutput = userOutput;
 		}
 
 		public void Run()
@@ -31,10 +31,14 @@ namespace RefactoredBattleField.Controller
 
 			ShowField(field); //TODO: UserOuput shoud do that
 
+            //Game Loop
+            GameLoop();
+
+            /*
 			//Just example
 			Bomb b = new Bomb(new Cell(1,2), 1);
 			b.BombExploded += b_BombExploded;
-
+            */
 			//Attach all bombs to BombExplodedEvent
 			//...
 			//do{
@@ -43,6 +47,19 @@ namespace RefactoredBattleField.Controller
 			//
 			//while()
 		}
+
+        private void GameLoop()
+        {
+            // Note: To break from the game Loop, you can use break; too.
+            bool continueGame = true;
+            while (continueGame)
+            {
+                Cell cellToBlowUp = this.UserInput.GetUserInputCell();
+
+                // Break for now
+                break;
+            }
+        }
 
 
 
@@ -76,9 +93,22 @@ namespace RefactoredBattleField.Controller
 
 		private void ShowField(Field field)
 		{
-			var userOutput = new ConsoleUserOutput();
-			userOutput .DisplayField(field);
-			//TODO: UserOuput shoud do that
+			this.UserOutput.DisplayField(field);
 		}
+
+        public IUserInput UserInput
+        {
+            get
+            {
+                return this.userInput;
+            }
+        }
+        public IUserOutput UserOutput
+        {
+            get
+            {
+                return this.userOutput;
+            }
+        }
 	}
 }

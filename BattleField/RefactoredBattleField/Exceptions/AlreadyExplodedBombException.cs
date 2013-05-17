@@ -1,9 +1,9 @@
-﻿using RefactoredBattleField.Model;
-using System;
-using System.Runtime.Serialization;
-
-namespace RefactoredBattleField.Exceptions
+﻿namespace RefactoredBattleField.Exceptions
 {
+    using RefactoredBattleField.Model;
+    using System;
+    using System.Runtime.Serialization;
+
     [Serializable]
     class AlreadyExplodedBombException : Exception
     {

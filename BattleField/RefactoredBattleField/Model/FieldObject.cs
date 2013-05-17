@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace RefactoredBattleField.Model
+﻿namespace RefactoredBattleField.Model
 {
+    using System;
+    using System.Linq;
+
 	public abstract class FieldObject
 	{
 		public FieldObject(Cell position, char[,] body)

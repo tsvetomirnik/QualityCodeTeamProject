@@ -1,11 +1,9 @@
 ﻿namespace RefactoredBattleField.View
 {
 	using System;
-	using System.Linq;
-	using System.Text;
-	using RefactoredBattleField.Model;
+    using System.Text;
 
-	public class ConsoleUserOutput : IUserOutput
+    public class ConsoleUserOutput : IUserOutput
 	{
 		public void DisplayMessage(string message)
 		{

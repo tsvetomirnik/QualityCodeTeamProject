@@ -1,17 +1,19 @@
-﻿using System;
-using System.Linq;
-
-namespace RefactoredBattleField
+﻿namespace RefactoredBattleField
 {
+    using System;
+    using System.Linq;
+    using RefactoredBattleField.View;
+
 	class BattleFieldGame
 	{
         /// <summary>
         /// The entry point of the game.
         /// </summary>
-        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Controller.GameEngine game = new Controller.GameEngine();
+            IUserInput userInput = new ConsoleUserInput();
+		    IUserOutput userOutput = new ConsoleUserOutput();
+            Controller.GameEngine game = new Controller.GameEngine(userInput, userOutput);
             game.Run();
 		}
 	}

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace RefactoredBattleField.Model
+﻿namespace RefactoredBattleField.Model
 {
+    using System;
+    using System.Linq;
+
 	public class Explosion : FieldObject
 	{
 		private int[,] _body;

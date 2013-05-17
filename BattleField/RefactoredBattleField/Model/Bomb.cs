@@ -1,9 +1,9 @@
-﻿using RefactoredBattleField.Exceptions;
-using System;
-using System.Linq;
-
-namespace RefactoredBattleField.Model
+﻿namespace RefactoredBattleField.Model
 {
+    using RefactoredBattleField.Exceptions;
+    using System;
+    using System.Linq;
+
 	public class Bomb : FieldObject
 	{
 		public const int MinSize = 1;
@@ -24,6 +24,7 @@ namespace RefactoredBattleField.Model
 		}
 
 		public event EventHandler BombExploded;
+
 		protected void OnBombExploded(EventArgs args)
 		{
 			EventHandler handler = BombExploded;

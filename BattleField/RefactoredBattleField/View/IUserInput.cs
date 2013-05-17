@@ -3,10 +3,12 @@
 	using System;
 	using System.Linq;
 
-	interface IUserInput
+	public interface IUserInput
 	{
 		int GetFieldSize();
 
 		int[] GetCellPosition();
-	}
+
+        Model.Cell GetUserInputCell();
+    }
 }

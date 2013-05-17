@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using RefactoredBattleField.Extensions;
-using RefactoredBattleField.Model;
-using System.Collections.Generic;
-
-namespace RefactoredBattleField.Controller
+﻿namespace RefactoredBattleField.Controller
 {
+    using System;
+    using System.Linq;
+    using RefactoredBattleField.Extensions;
+    using RefactoredBattleField.Model;
+    using System.Collections.Generic;
+
 	public static class FieldGenerator
 	{
 		public const int MinBombsPercentage = 15;
