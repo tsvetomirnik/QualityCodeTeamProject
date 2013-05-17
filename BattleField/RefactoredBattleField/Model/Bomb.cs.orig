@@ -16,10 +16,10 @@ namespace RefactoredBattleField.Model
 			: base(position)
 		{
 			Size = size;
-            
-            this.SetExplosion(size);
 
-            _isExploded = false;
+			SetExplosion(size);
+
+			_isExploded = false;
 		}
 
 		public event EventHandler BombExploded;
@@ -96,39 +96,44 @@ namespace RefactoredBattleField.Model
 					{0, 0, 1, 0, 0},
 				};
 			}
+<<<<<<< HEAD
+			else
+			{
+				throw new Exception("Invalid size"); //TODO: Write better exception
+			}
+
+			//TODO: Add 4 and 5
+=======
             else if (size == 4)
             {
                 explosionBody = new[,]
 				{
-					{0, 1, 1, 1, 0},
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
-					{0, 1, 1, 1, 0},
+					{' ', 'x', 'x', 'x', ' '},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{' ', 'x', 'x', 'x', ' '},
 				};
             }
             else if (size == 5)
             {
                 explosionBody = new[,]
 				{
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
-					{1, 1, 1, 1, 1},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', 'x', 'x', 'x'},
 				};
             }
-
-
-			Explosion = new Explosion(this.Position, explosionBody);
+>>>>>>> 5316a9e55baf9bb5cc9e9a2f329955ffd113a979
 
 			Cell explosionPosition = new Cell
 			{
-                Col = this.Position.Row - (explosionBody.GetLength(0) / 2),
-				Row = this.Position.Col - (explosionBody.GetLength(1)/2)
+				Col = this.position.Row - (explosionBody.GetLength(0)/2),
+				Row = this.position.Col - (explosionBody.GetLength(1)/2)
 			};
 			Explosion = new Explosion(explosionPosition, explosionBody);
-
 		}
 
 		public void Explode()

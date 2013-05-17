@@ -11,6 +11,11 @@ namespace RefactoredBattleField.Model
 			this.Image = body;
 		}
 
+        public FieldObject(Cell position)
+        {
+            this.Position = position;
+        }
+
         public Cell Position { get; private set; }
 
         public char[,] Image { get; private set; }

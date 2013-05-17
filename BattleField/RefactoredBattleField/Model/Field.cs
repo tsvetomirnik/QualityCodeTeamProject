@@ -10,19 +10,20 @@ namespace RefactoredBattleField.Model
 	{
 		public const int MaxSize=10;
 
-		private int _size;
-		private List<Bomb> _bombs;
+		private int size;
+		private List<FieldObject> fieldObjects;
 
 		public Field(int size)
 		{
 			this.Size = size;
-			_bombs = new List<Bomb>();
+			Size = size;
+			fieldObjects = new List<FieldObject>();
 		}
 
 		public int Size
 		{
-			get { return _size; }
-			set
+			get { return size; }
+			private set
 			{
 				if(value <= 0 && value > Field.MaxSize)
 				{
@@ -30,82 +31,74 @@ namespace RefactoredBattleField.Model
 						string.Format("Size must be in range of [{0}:{1}].", 1, Field.MaxSize));
 				}
 
-				_size = value;
+				size = value;
 			}
 		}
 
-		public void AddBomb(Bomb bomb)
+		public void AddFieldObjects(FieldObject fieldObject)
 		{
-			if (bomb == null)
+			if (fieldObject == null)
 			{
-				throw new ArgumentNullException("Value for Bomb cannot be Null.");
+				throw new ArgumentNullException("Value for Field Object cannot be Null.");
 			}
 
-			if (!IsInRange(bomb.Position))
+			if (!IsInRange(fieldObject.Position))
 			{
-				throw new ArgumentOutOfRangeException("The Bomb's position is out of range.");
+				throw new ArgumentOutOfRangeException("The Field Object's position is out of range.");
 			}
 
-			if (ContainsBomb(bomb.Position))
+			if (ContainsFieldObject(fieldObject.Position))
 			{
-				throw new ArgumentException("Already exists element on this position."); //TODO: Add new exception type
+				//throw new ArgumentException("Already exists element on this position."); //TODO: Add new exception type
 			}
 
-			_bombs.Add(bomb);
+			fieldObjects.Add(fieldObject);
 		}
 
-		public FieldObject GetBomb(Cell position)
+		public List<FieldObject> GetFieldObjects()
+		{
+			return fieldObjects;
+		}
+
+		public FieldObject GetFieldObject(Cell position)
 		{
 			if (!IsInRange(position))
 			{
 				throw new ArgumentOutOfRangeException("position");
 			}
 
-            Console.WriteLine("Bomb Count:", _bombs.Count);
-
-            foreach (var bomb in _bombs)
+            foreach (var obj in fieldObjects)
             {
-                if (bomb.Position.Row == position.Row &&
-                    bomb.Position.Col == position.Col)
+                if (obj.Position.Row == position.Row &&
+                    obj.Position.Col == position.Col)
                 {
-                    return bomb;
+                    return obj;
                 }
             }
 
             return null;
-            
-            //return _bombs.Where(x => 
-            //    x.GetPosition().Col == position.Col 
-            //    && x.GetPosition().Row == position.Row).First();
-            
 		}
 
 		// public bool ContainsBomb(Bomb bomb)
-        public bool ContainsBomb(Cell position)
+        public bool ContainsFieldObject(Cell position)
 		{
-            foreach (var bomb in _bombs)
+            foreach (var obj in fieldObjects)
             {
-                if (bomb.Position.Row == position.Row &&
-                    bomb.Position.Col == position.Col)
+                if (obj.Position.Row == position.Row &&
+                    obj.Position.Col == position.Col)
                 {
                     return true;
                 }
             }
 
             return false;
-            //return _bombs.Any(x => 
-            //    x.GetPosition().Col == bomb.GetPosition().Col 
-            //    && x.GetPosition().Row == bomb.GetPosition().Row);
 		}
 
-        
-
-
-		public int BombsCount
+		public int FieldObjectsCount
 		{
 			get
 			{
-				return _bombs.Count;
+				return fieldObjects.Count;
 			}
 		}
 
@@ -118,7 +111,7 @@ namespace RefactoredBattleField.Model
 
             char symbol = ' ';
 
-            if (this.ContainsBomb(position))
+            if (this.ContainsFieldObject(position))
             {
                 symbol = 'x';
             }
@@ -126,21 +119,17 @@ namespace RefactoredBattleField.Model
             return symbol;
         }
 
-
-
 		private bool IsInRange(Cell position)
 		{
 			if (position.Col < 0 ||
-				position.Col >= _size ||
+				position.Col >= this.Size ||
 				position.Row < 0 ||
-				position.Row >= _size)
+                position.Row >= this.Size)
 			{
 				return false;
 			}
 
 			return true;
 		}
-
-        
 	}
 }
