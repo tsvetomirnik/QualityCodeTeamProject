@@ -1,67 +1,67 @@
 ﻿namespace RefactoredBattleField.Controller
 {
+    #region Usings
     using System;
     using System.Linq;
     using RefactoredBattleField.Model;
     using RefactoredBattleField.View;
+    #endregion
 
-	public class GameEngine
-	{
-		private IUserInput userInput;
-		private IUserOutput userOutput;
-		int coveredBombs = 0;
-		int explodedBombs = 0;
+    public class GameEngine
+    {
+        #region Fields
+            private IUserInput userInput;
+		    private IUserOutput userOutput;
+		    private int coveredBombs = 0;
+		    private int explodedBombs = 0;
+        #endregion
 
-        public GameEngine(IUserInput userInput, IUserOutput userOutput)
-		{
-            this.userInput = userInput;
-            this.userOutput = userOutput;
-		}
-
-		public void Run()
-		{
-			//_userOutput.DisplayMessage("Please enter valid size of the field: ");
-			//int fieldSize = _userInput.GetFieldSize();
-			Console.WriteLine("Please enter valid size of the field: ");
-			int fieldSize = ReadFieldSize();
-
-			//IRenderer renderer = new ConsoleRenderer(fieldSize);
-
-			Field field = FieldGenerator.GenerateField(fieldSize);
-
-			ShowField(field); //TODO: UserOuput shoud do that
-
-            //Game Loop
-            GameLoop();
-
-            /*
-			//Just example
-			Bomb b = new Bomb(new Cell(1,2), 1);
-			b.BombExploded += b_BombExploded;
-            */
-			//Attach all bombs to BombExplodedEvent
-			//...
-			//do{
-			//
-			//	some logic
-			//
-			//while()
-		}
-
-        private void GameLoop()
-        {
-            // Note: To break from the game Loop, you can use break; too.
-            bool continueGame = true;
-            while (continueGame)
+        #region Constructors
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GameEngine" /> class.
+            /// </summary>
+            /// <param name="userInput">The user input.</param>
+            /// <param name="userOutput">The user output.</param>
+            public GameEngine(IUserInput userInput, IUserOutput userOutput)
             {
-                Cell cellToBlowUp = this.UserInput.GetUserInputCell();
+                this.userInput = userInput;
+                this.userOutput = userOutput;
+		    }
+        #endregion
 
-                // Break for now
-                break;
+        #region GameLoop
+            public void Run()
+		    {
+			
+			    Console.WriteLine("Please enter valid size of the field: ");
+			    int fieldSize = ReadFieldSize();
+
+			
+
+			    Field field = FieldGenerator.GenerateField(fieldSize);
+
+			    ShowField(field); //TODO: UserOuput shoud do that
+
+            
+                GameLoop();
+
+            
+		    }
+
+            private void GameLoop()
+            {
+                // Note: To break from the game Loop, you can use break; too.
+                bool continueGame = true;
+                while (continueGame)
+                {
+                    Cell cellToBlowUp = this.UserInput.GetUserInputCell();
+
+                    // Break for now
+                    break;
+                }
             }
-        }
-
-
+        #endregion
+        
 
         /// <summary>
         /// A method for check valid field size of the game (1..10).
@@ -69,22 +69,12 @@
         /// <returns>Return valid field size.</returns>
         public int ReadFieldSize()
         {
-			string fieldSizeInput;
-			int inputNumber;
-			do
-			{
-				fieldSizeInput = Console.ReadLine();
-				if (!(Int32.TryParse(fieldSizeInput, out inputNumber)))
-				{
-					Console.Write("Please enter valid size of the field: ");
-				}
-			}
-			while (inputNumber <= 0 || inputNumber > Field.MaxSize);
+            int inputNumber = this.userInput.GetFieldSize();
 
 			return inputNumber ;
 		}
 
-		private void b_BombExploded(object sender, EventArgs e)
+		private void BombsExploded(object sender, EventArgs e)
 		{
 			explodedBombs++;
 			//Calculate covered bombs

@@ -21,6 +21,10 @@
 			Console.WriteLine(exception.Message);
 		}
 
+        /// <summary>
+        /// Displays the field with generated positions.
+        /// </summary>
+        /// <param name="field">The field.</param>
         public void DisplayField(Model.Field field)
         {
             const int TopBarOffsetSize = 3;

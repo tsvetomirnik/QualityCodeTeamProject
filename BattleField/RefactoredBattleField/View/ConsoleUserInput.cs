@@ -4,24 +4,29 @@
 	using System.Linq;
 	using RefactoredBattleField.Model;
 
-	public class ConsoleUserInput : IUserInput
-	{
-		public int GetFieldSize()
-		{
+    /// <summary>
+    /// Class for user inputs
+    /// </summary>
+    public class ConsoleUserInput : IUserInput
+    {
+        /// <summary>
+        /// Gets the size of the field.
+        /// </summary>
+        /// <returns></returns>
+        public int GetFieldSize()
+        {
             string fieldSizeInput;
             int readNumber;
            
             fieldSizeInput = Console.ReadLine();
 
-            if (!(Int32.TryParse(fieldSizeInput, out readNumber)))
+            if (!(int.TryParse(fieldSizeInput, out readNumber)))
             {
-                readNumber = -1;
+                throw new InvalidCastException(string.Format("The input {0} was not an integer.", fieldSizeInput));
             }           
 
             return readNumber;
 		}
-
-        
 
 		public int[] GetCellPosition()
 		{
@@ -29,7 +34,11 @@
 			throw new NotImplementedException();
 		}
 
-		public Cell GetUserInputCell()
+        /// <summary>
+        /// Gets the coordinates for input cell.
+        /// </summary>
+        /// <returns>Cell</returns>
+        public Cell GetUserInputCell()
         {
             Console.Write("Please enter coordinates: ");
 

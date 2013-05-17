@@ -23,6 +23,9 @@
 				throw new ArgumentOutOfRangeException("Negative or zero value for field size. The field size must be positive");
 			}
 
+            // Generate field and add the bombs
+            Field generatedField = new Field(fieldSize);
+
             // Generate the bomb position list
 		    double bombsPercentage = RandomGenerator.GetRand(MinBombsPercentage, MaxBombsPercentage + 1) * 1.0 / 100;
             int numberOfCells = fieldSize * fieldSize;
@@ -30,9 +33,6 @@
             int desiredBombCount = (int)(numberOfCells * bombsPercentage);
 
             List<Cell> listOfPossibleBombPositions = GenerateBombPositionList(desiredBombCount, fieldSize, fieldSize);
-
-            // Generate field and add the bombs
-			Field generatedField = new Field(fieldSize);
 
             for (int createdBombCount = 0; createdBombCount < listOfPossibleBombPositions.Count; createdBombCount++)
 			{
@@ -45,6 +45,13 @@
 			return generatedField;
 		}
 
+        /// <summary>
+        /// Generates the bomb position list.
+        /// </summary>
+        /// <param name="desiredBombCount">The desired bomb count.</param>
+        /// <param name="fieldSizeRows">The field size rows.</param>
+        /// <param name="fieldSizeCols">The field size cols.</param>
+        /// <returns>List with DesiredBombCount number of positions.</returns>
         private static List<Cell> GenerateBombPositionList(int desiredBombCount, int fieldSizeRows, int fieldSizeCols)
         {
             var generateAllPositions = new List<Cell>(fieldSizeRows * fieldSizeCols);
@@ -74,7 +81,7 @@
         /// <returns>Bomb at position from game field.</returns>
         private static Bomb GenerateRandomBomb(Cell position)
         {
-			int size = RandomGenerator.GetRand(1, 5);
+			int size = RandomGenerator.GetRand(Bomb.MinSize, Bomb.MaxSize + 1);
 			Bomb bomb = new Bomb(position, size);
 			return bomb;
 		}

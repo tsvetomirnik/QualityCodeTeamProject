@@ -4,8 +4,9 @@
     using System;
     using System.Linq;
 
-	public class Bomb : FieldObject
-	{
+    
+    public class Bomb : FieldObject
+    {
 		public const int MinSize = 1;
 		public const int MaxSize = 5;
 		private bool isExploded;
@@ -64,8 +65,12 @@
 			}
 		}
 		
-		protected void SetExplosion(int size)
-		{
+        /// <summary>
+        /// Method for sets the different models (1..5) of explosion.
+        /// </summary>
+        /// <param name="size">The size.</param>
+        protected void SetExplosion(int size)
+        {
 			int[,] explosionBody = new int[,]{};
 			Cell explosionCenter;
 
@@ -121,7 +126,6 @@
 					{1, 1, 1, 1, 1},
 				};
             }
-
 
 			Explosion = new Explosion(this.Position, explosionBody);
 

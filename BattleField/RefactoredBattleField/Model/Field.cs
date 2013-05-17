@@ -13,8 +13,7 @@
 		public Field(int size)
 		{
 			this.Size = size;
-			Size = size;
-			fieldObjects = new List<FieldObject>();
+			this.fieldObjects = new List<FieldObject>();
 		}
 
 		public int Size
@@ -22,7 +21,7 @@
 			get { return size; }
 			private set
 			{
-				if(value <= 0 && value > Field.MaxSize)
+				if(!(0 < value && value <= Field.MaxSize))
 				{
 					throw new ArgumentOutOfRangeException("Size",
 						string.Format("Size must be in range of [{0}:{1}].", 1, Field.MaxSize));
@@ -75,8 +74,7 @@
 
             return null;
 		}
-
-		// public bool ContainsBomb(Bomb bomb)
+        		
         public bool ContainsFieldObject(Cell position)
 		{
             foreach (var obj in fieldObjects)
@@ -110,7 +108,10 @@
 
             if (this.ContainsFieldObject(position))
             {
-                symbol = 'x';
+                // symbol = 'x';
+                FieldObject fieldObject = this.GetFieldObject(position);
+                Bomb bomb = fieldObject as Bomb;
+                symbol = (char) bomb.Size.ToString()[0];
             }
 
             return symbol;

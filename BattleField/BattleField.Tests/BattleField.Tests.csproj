@@ -50,12 +50,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controller\FieldGeneratorTests.cs" />
     <Compile Include="Model\CellTests.cs" />
     <Compile Include="Model\BombTests.cs" />
+    <Compile Include="Model\FieldTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controller\" />
     <Folder Include="Exceptions\" />
     <Folder Include="View\" />
   </ItemGroup>
