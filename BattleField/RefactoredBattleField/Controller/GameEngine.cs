@@ -16,6 +16,26 @@
 		    private int explodedBombs = 0;
         #endregion
 
+        #region Properties
+            public Field GameField { get; private set; }
+
+            public IUserInput UserInput
+            {
+                get
+                {
+                    return this.userInput;
+                }
+            }
+
+            public IUserOutput UserOutput
+            {
+                get
+                {
+                    return this.userOutput;
+                }
+            }
+        #endregion
+
         #region Constructors
             /// <summary>
             /// Initializes a new instance of the <see cref="GameEngine" /> class.
@@ -36,11 +56,9 @@
 			    Console.WriteLine("Please enter valid size of the field: ");
 			    int fieldSize = ReadFieldSize();
 
-			
+                this.GameField = FieldGenerator.GenerateField(fieldSize, fieldSize);
 
-			    Field field = FieldGenerator.GenerateField(fieldSize);
-
-			    ShowField(field); //TODO: UserOuput shoud do that
+                ShowField();
 
             
                 GameLoop();
@@ -56,9 +74,23 @@
                 {
                     Cell cellToBlowUp = this.UserInput.GetUserInputCell();
 
-                    // Break for now
-                    break;
+                    var isBomb = this.GameField.ContainsFieldObject(cellToBlowUp);
+                    if (isBomb)
+                    {
+                        var obj = this.GameField.GetFieldObject(cellToBlowUp);
+                        var objBomb = obj as Bomb;
+
+                        objBomb.BombExploded += BombExploded;
+                    }
+
+                    // End the loop if needed!
+                    if (this.GameField.FieldObjectsCount > 0)
+                    {
+                        break;
+                    }
                 }
+
+                ShowField();
             }
         #endregion
         
@@ -74,31 +106,15 @@
 			return inputNumber ;
 		}
 
-		private void BombsExploded(object sender, EventArgs e)
+		private void BombExploded(object sender, EventArgs e)
 		{
 			explodedBombs++;
 			//Calculate covered bombs
-			//ShowField();
 		}
 
-		private void ShowField(Field field)
+		private void ShowField()
 		{
-			this.UserOutput.DisplayField(field);
+			this.UserOutput.DisplayField(this.GameField);
 		}
-
-        public IUserInput UserInput
-        {
-            get
-            {
-                return this.userInput;
-            }
-        }
-        public IUserOutput UserOutput
-        {
-            get
-            {
-                return this.userOutput;
-            }
-        }
 	}
 }

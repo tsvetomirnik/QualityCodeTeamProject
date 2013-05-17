@@ -16,23 +16,23 @@
         /// </summary>
         /// <param name="fieldSize">Valid size of the field (1..10).</param>
         /// <returns>The newly generated <see cref="Field"/>.</returns>
-        public static Field GenerateField(int fieldSize)
+        public static Field GenerateField(int fieldSizeRows, int fieldSizeCols)
         {
-			if (fieldSize <= 0)
+            if (fieldSizeRows <= 0 || fieldSizeCols <= 0)
 			{
 				throw new ArgumentOutOfRangeException("Negative or zero value for field size. The field size must be positive");
 			}
 
             // Generate field and add the bombs
-            Field generatedField = new Field(fieldSize);
+            Field generatedField = new Field(fieldSizeRows);
 
             // Generate the bomb position list
 		    double bombsPercentage = RandomGenerator.GetRand(MinBombsPercentage, MaxBombsPercentage + 1) * 1.0 / 100;
-            int numberOfCells = fieldSize * fieldSize;
+            int numberOfCells = fieldSizeRows * fieldSizeCols;
 
             int desiredBombCount = (int)(numberOfCells * bombsPercentage);
 
-            List<Cell> listOfPossibleBombPositions = GenerateBombPositionList(desiredBombCount, fieldSize, fieldSize);
+            List<Cell> listOfPossibleBombPositions = GenerateBombPositionList(desiredBombCount, fieldSizeRows, fieldSizeCols);
 
             for (int createdBombCount = 0; createdBombCount < listOfPossibleBombPositions.Count; createdBombCount++)
 			{
