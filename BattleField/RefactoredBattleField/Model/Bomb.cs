@@ -116,7 +116,7 @@ namespace RefactoredBattleField.Model
 				};
             }
 
-			Explosion = new Explosion(this.position, explosionBody);
+			Explosion = new Explosion(this.Position, explosionBody);
 		}
 
 		public void Explode()

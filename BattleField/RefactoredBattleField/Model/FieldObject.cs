@@ -5,23 +5,14 @@ namespace RefactoredBattleField.Model
 {
 	public abstract class FieldObject
 	{
-		protected Cell position;
-		protected char[,] body;
-
 		public FieldObject(Cell position, char[,] body)
 		{
-			this.position = position;
-			this.body = body;
+			this.Position = position;
+			this.Image = body;
 		}
 
-		public Cell GetPosition()
-		{
-			return position;
-		}
+        public Cell Position { get; private set; }
 
-		public char[,] GetImage()
-		{
-			return body;
-		}
+        public char[,] Image { get; private set; }
 	}
 }

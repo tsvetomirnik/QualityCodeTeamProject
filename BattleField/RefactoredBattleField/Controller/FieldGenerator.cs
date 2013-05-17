@@ -13,18 +13,20 @@ namespace RefactoredBattleField.Controller
 		{
 			if (fieldSize <= 0)
 			{
-				throw new ArgumentException("Invalid null or negative size value.");
+				throw new ArgumentOutOfRangeException("Negative or zero value for field size. The field size must be positive");
 			}
 
-			var bombsPercentage = RandomGenerator.GetRand(MinBombsPercentage, MaxBombsPercentage+1);
-			int desiredBombs = (fieldSize * fieldSize) * (bombsPercentage / 100);
+		    double bombsPercentage = RandomGenerator.GetRand(MinBombsPercentage, MaxBombsPercentage + 1) * 1.0 / 100;
+            int numberOfCells = fieldSize * fieldSize;
+
+            int desiredBombs = (int)(numberOfCells * bombsPercentage);
 
 			Field generatedField = new Field(fieldSize);
 
 			while (generatedField.BombsCount < desiredBombs)
 			{
 				var bomb = GetRandomBomb(fieldSize);
-				generatedField.AddBomb(bomb);
+                generatedField.AddBomb(bomb);
 			}
             
 			return generatedField;

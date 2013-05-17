@@ -15,7 +15,7 @@ namespace RefactoredBattleField.Model
 
 		public Field(int size)
 		{
-			Size = size;
+			this.Size = size;
 			_bombs = new List<Bomb>();
 		}
 
@@ -38,17 +38,17 @@ namespace RefactoredBattleField.Model
 		{
 			if (bomb == null)
 			{
-				throw new ArgumentNullException("bomb");
+				throw new ArgumentNullException("Value for Bomb cannot be Null.");
 			}
 
-			if (!IsInRange(bomb.GetPosition()))
+			if (!IsInRange(bomb.Position))
 			{
-				throw new ArgumentOutOfRangeException("bomb");
+				throw new ArgumentOutOfRangeException("The Bomb's position is out of range.");
 			}
 
-			if (ContainsBomb(bomb))
+			if (ContainsBomb(bomb.Position))
 			{
-				throw new Exception("Already exists element on this position."); //TODO: Add new exception type
+				throw new ArgumentException("Already exists element on this position."); //TODO: Add new exception type
 			}
 
 			_bombs.Add(bomb);
@@ -61,16 +61,41 @@ namespace RefactoredBattleField.Model
 				throw new ArgumentOutOfRangeException("position");
 			}
 
-			return _bombs.Where(x => 
-				x.GetPosition().Col == position.Col 
-				&& x.GetPosition().Row == position.Row).First();
+            Console.WriteLine("Bomb Count:", _bombs.Count);
+
+            foreach (var bomb in _bombs)
+            {
+                if (bomb.Position.Row == position.Row &&
+                    bomb.Position.Col == position.Col)
+                {
+                    return bomb;
+                }
+            }
+
+            return null;
+            
+            //return _bombs.Where(x => 
+            //    x.GetPosition().Col == position.Col 
+            //    && x.GetPosition().Row == position.Row).First();
+            
 		}
 
-		public bool ContainsBomb(Bomb bomb)
+		// public bool ContainsBomb(Bomb bomb)
+        public bool ContainsBomb(Cell position)
 		{
-			return _bombs.Any(x => 
-				x.GetPosition().Col == bomb.GetPosition().Col 
-				&& x.GetPosition().Row == bomb.GetPosition().Row);
+            foreach (var bomb in _bombs)
+            {
+                if (bomb.Position.Row == position.Row &&
+                    bomb.Position.Col == position.Col)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+            //return _bombs.Any(x => 
+            //    x.GetPosition().Col == bomb.GetPosition().Col 
+            //    && x.GetPosition().Row == bomb.GetPosition().Row);
 		}
 
         
@@ -80,9 +105,26 @@ namespace RefactoredBattleField.Model
 		{
 			get
 			{
-				return _bombs.Count();
+				return _bombs.Count;
 			}
 		}
+
+        public char GetSymbolInPosition(Cell position)
+        {
+            if (!IsInRange(position))
+            {
+                throw new ArgumentOutOfRangeException("position");
+            }
+
+            char symbol = ' ';
+
+            if (this.ContainsBomb(position))
+            {
+                symbol = 'x';
+            }
+
+            return symbol;
+        }
 
 
 
@@ -99,6 +141,6 @@ namespace RefactoredBattleField.Model
 			return true;
 		}
 
-
+        
 	}
 }

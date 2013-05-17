@@ -40,12 +40,13 @@
             Console.WriteLine(topNumbersBar.ToString());
 
             StringBuilder fieldString = new StringBuilder();
-            for (int i = 0; i <= field.Size - 1; i++)
+            for (int row = 0; row <= field.Size - 1; row++)
             {
-                fieldString.AppendFormat("{0}| ", i);
-                for (int j = 0; j <= field.Size - 1; j++)
+                fieldString.AppendFormat("{0}| ", row);
+                for (int col = 0; col <= field.Size - 1; col++)
                 {
-                    fieldString.AppendFormat("{0} ", field.ToString());   //_field[i, j]
+                    var position = new Model.Cell(row, col);
+                    fieldString.AppendFormat("{0} ", field.GetSymbolInPosition(position));
                 }
 
                 fieldString.AppendLine();
